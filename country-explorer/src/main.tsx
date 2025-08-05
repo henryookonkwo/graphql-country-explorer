@@ -10,6 +10,9 @@ import {
 
 const client = new ApolloClient({
   uri: 'https://countries.trevorblades.com',
+  // The 'cache' property specifies the caching strategy for Apollo Client.
+  // Here, 'new InMemoryCache()' creates an in-memory cache instance,
+  // which Apollo Client uses to store and manage query results locally.
   cache: new InMemoryCache(),
 });
 
