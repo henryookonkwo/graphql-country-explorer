@@ -2,15 +2,23 @@
 import { useQuery } from '@apollo/client';
 import { GET_COUNTRIES } from "../graphql/queries"
 
-function CountryList() {
+interface CountryListProps {
+  searchTerm: string;
+}
+
+function CountryList({ searchTerm }: CountryListProps) {
   const { data, loading, error } = useQuery(GET_COUNTRIES);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
+  const filteredCountries = data.countries.filter((country: any) =>
+    country.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div>
-      {data.countries.map((country: any) => (
+      {filteredCountries.map((country: any) => (
         <div key={country.code} style={{ border: '1px solid #ccc', margin: '1rem', padding: '1rem' }}>
           <h3>{country.emoji} {country.name}</h3>
           <p>Capital: {country.capital}</p>
